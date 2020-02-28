@@ -3,10 +3,10 @@ import pickle
 import json
 import pandas as pd
 import numpy as np
-from optparse import OptionParser
+# from optparse import OptionParser
 import time
 import textract as tx
-import tensorflow_hub as hub
+# import tensorflow_hub as hub
 import tensorflow as tf
 import sys
 from numba import jit, cuda
