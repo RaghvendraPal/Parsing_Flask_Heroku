@@ -2,7 +2,7 @@ import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
 import os
-# from parsing import main
+from parsing import main
 
 app = Flask(__name__, static_url_path='')
 
@@ -16,16 +16,16 @@ def predict():
     For rendering results on HTML GUI
     '''
     if 'filename' in request.files:
-        photo = request.files['filename']
-        if photo.filename != '':
-            photo.save(os.path.join('upload', photo.filename))
+        file = request.files['filename']
+        if file.filename != '':
+            file.save(os.path.join('upload', file.filename))
     # file_name = request.files
     # file_name = file_name.file
-    return request.files['filename'].filename
+    # return request.files['filename'].filename
     # print(file_name)
-    # data_dict = main(file_name)
+    data_dict = main(file)
     # print(data_dict)
-    # return render_template('resume.html', prediction_text=file_name)
+    return render_template('resume.html', prediction_text=data_dict)
 
 
 if __name__ == "__main__":
