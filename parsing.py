@@ -16,7 +16,7 @@ from data import data_dict
 from project_data.project_parsing import project_model_prediction
 from update_dict_result import update_dict
 
-@jit 
+@jit
 def ner_parsing_func(file_path, output):
     ner_parsing_data = ner_model_prediction(file_path)
     output.put(ner_parsing_data)
@@ -28,13 +28,15 @@ def project_parsing_func(file_path, output):
     output.put(project_parsing_data)
     # output.put({'b':2})
     return True
-if __name__ == "__main__":
-    parser = OptionParser()
-    parser.add_option("-p", "--path", dest="file_path", help="Path to Image.")
-    (options, args) = parser.parse_args()
+
+def main(file_path):
+    # parser = OptionParser()
+    # parser.add_option("-p", "--path", dest="file_path", help="Path to Image.")
+    # (options, args) = parser.parse_args()
+    # options.file_path
     output = Queue()
-    p1 = Process(target=ner_parsing_func, args = (options.file_path,output))
-    p2 = Process(target=project_parsing_func, args = (options.file_path,output))
+    p1 = Process(target=ner_parsing_func, args = (file_path,output))
+    p2 = Process(target=project_parsing_func, args = (file_path,output))
     p1.start()
     p2.start()
     p1.join()
@@ -48,10 +50,12 @@ if __name__ == "__main__":
     try:
         data_dict = {**ner_data, **project_data}
         data_dict = update_dict(data_dict)
-        print(json.dumps(data_dict))
+        # print(json.dumps(data_dict))
     except Exception as e:
         print("Eception : ", e)
-
+    return data_dict
+# if __name__ == "__main__":
+#     main()
 # def func1(number,output):
 #   print('func1: starting')
 #   process_id = os.getpid()
