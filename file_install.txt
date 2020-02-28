@@ -1,7 +1,0 @@
-pip install numpy
-pip install pandas
-!pip install textract
-!pip install tensorflow==1.15.0
-pip install pickle
-pip install keras
-pip install tensorflow_hub

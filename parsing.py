@@ -9,10 +9,10 @@ import multiprocessing
 from numba import jit, cuda
 from multiprocessing import Process, Pool, Queue
 import os
-from optparse import OptionParser
+# from optparse import OptionParser
 import json
 from ner_data.ner_parsing import ner_model_prediction
-from data import data_dict
+# from data import data_dict
 from project_data.project_parsing import project_model_prediction
 from update_dict_result import update_dict
 
@@ -47,12 +47,12 @@ def main(file_path):
     # print(ner_data)
     # print(project_data)
     # print(type(project_data), type(ner_data))
-    try:
-        data_dict = {**ner_data, **project_data}
-        data_dict = update_dict(data_dict)
+    # try:
+    data_dict = {**ner_data, **project_data}
+    data_dict = update_dict(data_dict)
         # print(json.dumps(data_dict))
-    except Exception as e:
-        print("Eception : ", e)
+    # except Exception as e:
+    #     print("Eception : ", e)
     return data_dict
 # if __name__ == "__main__":
 #     main()

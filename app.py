@@ -18,14 +18,15 @@ def predict():
     if 'filename' in request.files:
         file = request.files['filename']
         if file.filename != '':
-            file.save(os.path.join('upload', file.filename))
+            file_path = os.path.join('upload', file.filename)
+            file.save(file_path)
     # file_name = request.files
     # file_name = file_name.file
     # return request.files['filename'].filename
     # print(file_name)
-    data_dict = main(file)
+    data = main(file_path)
     # print(data_dict)
-    return render_template('resume.html', prediction_text=data_dict)
+    return render_template('resume.html', data_dict=data)
 
 
 if __name__ == "__main__":
