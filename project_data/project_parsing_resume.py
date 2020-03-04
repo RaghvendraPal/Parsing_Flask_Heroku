@@ -7,7 +7,7 @@ def project_parsing_data(prediction, X_t):
     pickle_in = open(sys.path[0]+"/project_data/project_model/project_idx2tag.pickle","rb")
     project_idx2tag = pickle.load(pickle_in)
     pickle_in.close()
-    # print(project_idx2tag)
+    print(project_idx2tag)
     word_tag = ""
     for i in range(prediction.shape[0]):
         for s, pred in zip(X_t[i], prediction[i]):

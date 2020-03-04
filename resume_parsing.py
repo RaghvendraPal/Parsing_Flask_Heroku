@@ -12,11 +12,11 @@ import pickle
 import json
 import pandas as pd
 import numpy as np
-from optparse import OptionParser
+# from optparse import OptionParser
 import time
 # try:
 import textract as tx
-import tensorflow_hub as hub
+# import tensorflow_hub as hub
 # import tensorflow-gpu as tf
 import tensorflow as tf
 # except Exception as e:

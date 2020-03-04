@@ -1,0 +1,7 @@
+sudo -s
+watch -n 3 free -m
+watch -n 3 cat /proc/meminfo
+free -h
+sync; echo 1 > /proc/sys/vm/drop_caches
+sync; echo 2 > /proc/sys/vm/drop_caches
+sync; echo 3 > /proc/sys/vm/drop_caches

@@ -18,12 +18,14 @@ from update_dict_result import update_dict
 
 @jit
 def ner_parsing_func(file_path, output):
+    print("NER")
     ner_parsing_data = ner_model_prediction(file_path)
     output.put(ner_parsing_data)
     # output.put({'a':1})
     return True
 
 def project_parsing_func(file_path, output):
+    print("Project")
     project_parsing_data = project_model_prediction(file_path)
     output.put(project_parsing_data)
     # output.put({'b':2})
@@ -34,26 +36,31 @@ def main(file_path):
     # parser.add_option("-p", "--path", dest="file_path", help="Path to Image.")
     # (options, args) = parser.parse_args()
     # options.file_path
-    output = Queue()
-    p1 = Process(target=ner_parsing_func, args = (file_path,output))
-    p2 = Process(target=project_parsing_func, args = (file_path,output))
-    p1.start()
-    p2.start()
-    p1.join()
-    p2.join()
-#    print("Output :",output.get())
-    ner_data = output.get()
-    project_data = output.get()
-    # print(ner_data)
-    # print(project_data)
-    # print(type(project_data), type(ner_data))
-    # try:
-    data_dict = {**ner_data, **project_data}
-    data_dict = update_dict(data_dict)
+    try:
+        output = Queue()
+        p1 = Process(target=ner_parsing_func, args = (file_path,output))
+        p2 = Process(target=project_parsing_func, args = (file_path,output))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+    #    print("Output :",output.get())
+        ner_data = output.get()
+        project_data = output.get()
+        # print("NER")
+        # print(ner_data)
+        # print("Project")
+        # print(project_data)
+        # print(type(project_data), type(ner_data))
+        # data_dict = {**ner_data, **project_data}
+        data_dict = update_dict(data_dict)
+        return data_dict
         # print(json.dumps(data_dict))
-    # except Exception as e:
-    #     print("Eception : ", e)
-    return data_dict
+    except Exception as e:
+        print("Exception as "+str(e))
+        return "Exception as "+str(e)
+
+
 # if __name__ == "__main__":
 #     main()
 # def func1(number,output):

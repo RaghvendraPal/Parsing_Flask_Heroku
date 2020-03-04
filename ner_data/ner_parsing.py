@@ -42,11 +42,18 @@ def ner_to_matrix(padd):
 
 def ner_pre_processing(ner_filepath):
     extension = ner_filepath.split('.')
+    print(extension)
     if 'pdf' in extension or 'doc' in extension or 'docx' in extension:
-        text = tx.process(ner_filepath, method="pdftotext").decode('utf-8')
+        print("Inside PDF")
+        try:
+            text = tx.process(ner_filepath).decode('utf-8')
+        except Exception as e:
+            print("Exception as ",e)
         text = text.replace('\n',' ').replace('\r',' ').replace('\t',' ')
         text = text.replace('  ',' ')
+        print("text", text)
         padd_to_2d_text = list(ner_to_matrix(text.split()))
+        print(padd_to_2d_text)
         padd_to_2d_text = ner_padding_padd(padd_to_2d_text)
         padd_to_2d_text = ner_32_dim_matrix(padd_to_2d_text)
         return padd_to_2d_text
@@ -59,20 +66,23 @@ def ner_read_model():
         pickle_in = open(sys.path[0]+"/ner_data/ner_model/ner_model.pickle","rb")
         ner_model = pickle.load(pickle_in)
         pickle_in.close()
+        project("readed project model")
         return ner_model
     except FileNotFoundError as e:
         print("File Not Found Error : "+str(e))
         return "File Not Found Error"
 
 def ner_model_prediction(ner_filepath):
-    # print("ner file path",ner_filepath)
+    print("ner file path",ner_filepath)
     try:
         padd_to_2d_text = ner_pre_processing(ner_filepath)
+        print(padd_to_2d_text)
     except Exception as e:
         return "Data Error : "+str(e)
     try:
         model = ner_read_model()
         if model == "File Not Found Error":
+            print("FILE NOT FOUND")
             return "File Not Found Error"
         print(np.array(padd_to_2d_text).shape)
         prediction = model.predict(np.array(padd_to_2d_text))

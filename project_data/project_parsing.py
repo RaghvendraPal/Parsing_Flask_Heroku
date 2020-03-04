@@ -6,7 +6,7 @@ import numpy as np
 import time
 import sys
 import textract as tx
-import tensorflow_hub as hub
+# import tensorflow_hub as hub
 import tensorflow as tf
 import re
 from numba import jit, cuda
@@ -66,6 +66,7 @@ def project_read_model():
     try:
         pickle_in = open(sys.path[0]+"/project_data/project_model/project_model.pickle","rb")
         project_model = pickle.load(pickle_in)
+        project("readed project model")
         pickle_in.close()
         return project_model
     except FileNotFoundError as e:
